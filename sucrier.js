@@ -58,6 +58,18 @@
 	
 	Sp.lines=function(f){};
 	
+	Sp.splitAtFirst=function(a){
+		a=S(a);
+		var i=this.indexOf(a);
+		return -1<i?[this.substring(0,i),this.substr(i+a.length)]:[S(this),""];
+	};
+	
+	Sp.splitAtLast=function(a){
+		a=S(a);
+		var i=this.lastIndexOf(a);
+		return -1<i?[this.substring(0,i),this.substr(i+a.length)]:["",S(this)];
+	};
+	
 	Sp.toCamel=function(){};
 	
 	Sp.toKebab=function(){};
@@ -66,4 +78,4 @@
 	
 	Sp.words=function(f){};
 	
-})();
+})(String,String.prototype);
