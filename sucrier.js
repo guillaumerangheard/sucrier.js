@@ -32,15 +32,54 @@
 				return [s,""];
 			}
 		},
-		isEven:function(){},
-		isFinite:function(){return this===this&&-Infinity!==this&&Infinity!==this;},
-		isFloat:function(){},
-		isInteger:function(){},
-		isMultipleOf:function(x){},
-		isOdd:function(){},
-		pow:function(x){return M.pow(this,x);},
-		random:function(){return M.random()*this;},
-		sign:function(x){},
+		
+		// Number.prototype.isEven ( )
+		isEven:function(){
+			return 0===this%2;
+		},
+		
+		// Number.prototype.isFinite ( )
+		isFinite:function(){
+			return this===this&&-Infinity!==this&&Infinity!==this;
+		},
+		
+		// Number.prototype.isFloat ( )
+		isFloat:function(){
+			
+		},
+		
+		// Number.prototype.isInteger ( )
+		isInteger:function(){
+			return this.isFinite()&&this.trunc()===this;
+		},
+		
+		// Number.prototype.isMultipleOf ( Number x )
+		isMultipleOf:function(x){
+			return 0===this%N(x);
+		},
+		
+		// Number.prototype.isOdd ( =
+		isOdd:function(){
+			return 0!==this%2;
+		},
+		
+		// Number.prototype.pow ( Number x )
+		pow:function(x){
+			return M.pow(this,N(x));
+		},
+		
+		// Number.prototype.random ( )
+		random:function(){
+			return !N.isNaN(this)?M.random()*this:0;
+		},
+		
+		// Number.prototype.sign ( )
+		// Number.prototype.sign ( Number sign )
+		sign:function(x){
+			
+		},
+		
+		// Number.prototype.times ( Function iterator [ , Any context = global ] )
 		times:function(f,c){
 			c=c||G;
 			var i=0,l=N(this);
@@ -81,6 +120,8 @@
 				return "";
 			};
 		})(),
+		
+		// Number.prototype.toRoman ( )
 		toRoman:function(){
 			var r="";
 			if(0<this&&this.isInteger()){
@@ -100,7 +141,14 @@
 				else{r+="i".repeat(n);}
 			}
 			return r;
+		},
+		
+		// Number.prototype.toHex ( [ Number paddedLength ] )
+		toHex:function(x){
+			var r=this.toBase(16);
+			return x?"0".repeat(x-r.length)+r:r;
 		}
+		
 	});
 	
 	var _f=[
@@ -117,8 +165,35 @@
 	while(++i<l){
 		Np[_f[i]]=new Function("return Math."+_f[i]+"(this);");
 	}
+	// Number.prototype.abs ( )
+	// Number.prototype.acos ( )
+	// Number.prototype.acosh ( )
+	// Number.prototype.asin ( )
+	// Number.prototype.asinh ( )
+	// Number.prototype.atanh ( )
+	// Number.prototype.cbrt ( )
+	// Number.prototype.ceil ( )
+	// TODO: Number.prototype.ceil ( [ Number precision = 1 ] )
+	// Number.prototype.cos ( )
+	// Number.prototype.cosh ( )
+	// Number.prototype.exp ( )
+	// Number.prototype.expm1 ( )
+	// Number.prototype.floor ( )
+	// TODO: Number.prototype.floor ( [ Number precision = 1 ] )
+	// Number.prototype.log ( )
+	/// TODO: Number.prototype.log ( Number base )
+	// Number.prototype.log10 ( )
+	// Number.prototype.log1p ( )
+	// Number.prototype.log2 ( )
+	// Number.prototype.sin ( )
+	// Number.prototype.sinh ( )
+	// Number.prototype.sqrt ( )
+	// Number.prototype.tan ( )
+	// Number.prototype.tanh ( )
 	
 	_e(Sp,{
+		
+		// String.prototype.at ( Number i1 [ , ... , Number iN ] )
 		at:function(x){
 			if(1===arguments.length){
 				return this.charAt(x);
@@ -129,6 +204,9 @@
 			}
 			return r;
 		},
+		
+		// String.prototype.between ( String openingSymbol , String closingSymbol )
+		/// TODO: String.prototype.between ( String openingSymbol , String closingSymbol [ , Boolean allowEmbeded = false ] )
 		between:function(x,y){
 			x=S(x);
 			y=S(y);
@@ -144,6 +222,8 @@
 			}
 			return r;
 		},
+		
+		// String.prototype.cast ( )
 		cast:function(){
 			switch(this){
 				case"":return undefined;
@@ -156,9 +236,23 @@
 					if(this.isInteger()){return this.toInteger();}
 			}
 		},
-		characters:function(f,c){},
-		codeAt:function(x){},
-		codes:function(f,c){},
+		
+		// String.prototype.characters ( [ Function mapper [ , Any context ] ] )
+		characters:function(f,c){
+			
+		},
+		
+		// String.prototype.codeAt ( Number i1 [ , ... , Number iN ] )
+		codeAt:function(x){
+			
+		},
+		
+		// String.prototype.codes ( [ Function mapper [ , Any context ] ] )
+		codes:function(f,c){
+			
+		},
+		
+		// String.prototype.indicesOf ( String needle )
 		indicesOf:function(x){
 			x=S(x);
 			var i=-1,o=0,r=[];
@@ -168,19 +262,50 @@
 			}
 			return r;
 		},
-		lines:function(f,c){},
+		
+		// String.prototype.lines ( [ Function mapper [ , Any context ] ] )
+		lines:function(f,c){
+			
+		},
+		
+		// String.prototype.removeDiacritics ( )
+		removeDiacritics:function(){
+			
+		},
+		
+		// String.prototype.repeat ( Number times )
+		repeat:function(x){
+			if(N.isNumber(x)&&&&this.length){
+				x=x.abs()
+			}
+			return "";
+		},
+		
+		// String.prototype.splitAtFirst ( String needle )
 		splitAtFirst:function(x){
 			x=S(x);
 			var i=this.indexOf(x);
 			return -1<i?[this.substring(0,i),this.substr(i+x.length)]:[S(this),""];
 		},
+		
+		// String.prototype.splitAtLast ( String needle )
 		splitAtLast:function(x){
 			x=S(x);
 			var i=this.lastIndexOf(x);
 			return -1<i?[this.substring(0,i),this.substr(i+x.length)]:["",S(this)];
 		},
-		toCamel:function(){},
-		toKebab:function(){},
+		
+		// String.prototype.toCamel ( )
+		toCamel:function(){
+			
+		},
+		
+		// String.prototype.toKebab ( )
+		toKebab:function(){
+			
+		},
+		
+		// String.prototype.toSlug ( )
 		toSlug:function(){},
 		words:function(f,c){}
 	});
