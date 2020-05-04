@@ -1,4 +1,4 @@
-(function(G,M,N,Np,S,Sp){
+(function(G,A,Ap,M,N,Np,S,Sp){
 	var _e=function(a,b){
 			for(var k in b){a[k]=a[k]||b[k];}
 		};
@@ -19,8 +19,21 @@
 	
 	_e(Np,{
 		atan:function(x){return arguments.length?M.atan2(this,x):M.atan(this);},
+		clamp:function(x,y){return N(this<x?x:y<this?y:this);},
+		clmax:function(x){return N(x<this?x:this);},
+		clmin:function(x){return N(this<x?x:this);},
+		digits:function(){
+			var s=S(this);
+			if(this<0){s=s.substr(1);}
+			if(-1<s.indexOf(".")){
+				return s.plit(".");
+			}
+			else{
+				return [s,""];
+			}
+		},
 		isEven:function(){},
-		isFinite:function(){},
+		isFinite:function(){return this===this&&-Infinity!==this&&Infinity!==this;},
 		isFloat:function(){},
 		isInteger:function(){},
 		isMultipleOf:function(x){},
@@ -42,25 +55,49 @@
 				}
 			}
 		},
-		toBase:function(x){},
+		
+		// Number.prototype.toBase ( Number radix )
+		/// Where 2 <= radix <= 62
+		// Number .prototype.toBase ( String alphabet [ , Boolean skipZero = false ] )
+		toBase:(function(){
+			var _b="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			return function(x,y){
+				if(N.isNumber(x)){
+					if(1<x&&x.isInteger()){
+						if(x<37){
+							return this.toString(x);
+						}
+						else if(x<62){
+							return this.toBase(_b.substr(0,x));
+						}
+					}
+				}
+				else if(S.isString(x)){
+					if(x.length){
+						var l=x.length,p=1,n=N(this),r=n<0?"-":"";
+						
+					}
+				}
+				return "";
+			};
+		})(),
 		toRoman:function(){
 			var r="";
 			if(0<this&&this.isInteger()){
 				var b,n=N(this);
-				if(1e3<=n){
-					b=(n/1e3).floor();
-					r+="m".repeat(b);
-					n-=b*1e3;
-				}
-				if(9e2<=n){
-					r+="cm";
-					n-=9e2;
-				}
-				if(5e2<=n){
-					r+="d";
-					n-=5e2;
-				}
-				if(4e2<=
+				if(1e3<=n){b=(n/1e3).floor();r+="m".repeat(b);n-=b*1e3;}
+				if(900<=n){r+="cm";n-=900;}
+				else if(500<=n){r+="d";n-=500;}
+				else if(400<=n){r+="cd";n-=400;}
+				if(100<=n){b=(n/100).floor();r+="c".repeat(b);n-=b*100;}
+				if(90<=n){r+="xc";n-=90;}
+				else if(50<=n){r+="l";n-=50;}
+				else if(40<=n){r+="xl";n-=40;}
+				else if(10<=n){b=(n/10).floor();r+="x".repeat(b);n-=b*10;}
+				if(9===n){r+="ix";}
+				else if(5===n){r+="v";n-=5;}
+				else if(4===n){r+="iv";}
+				else{r+="i".repeat(n);}
 			}
 			return r;
 		}
@@ -149,6 +186,7 @@
 	});
 })(
 	this,
+	Array,Array.prototype,
 	Math,
 	Number,Number.prototype,
 	String,String.prototype
