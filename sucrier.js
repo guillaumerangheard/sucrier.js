@@ -1,27 +1,117 @@
 (function(G,A,Ap,M,N,Np,S,Sp){
-	var _e=function(a,b){
-			for(var k in b){a[k]=a[k]||b[k];}
-		};
+	var _e=function(a,b){for(var k in b){a[k]=a[k]||b[k];}};
 	
 	_e(M,{
-		acosh:function(x){return M.log(x+M.sqrt(x*x-1));},
-		asinh:function(x){return -Infinity===x?x:M.log(x+M.sqrt(x*x+1));},
-		atanh:function(x){return M.log((1+x)/(1-x))/2;},
-		cbrt:function(x){var y=M.pow(M.abs(x),1/3);return x<0?-y:y;},
-		cosh:function(x){return (M.exp(x)+M.exp(-x))/2;},
-		expm1:function(x){return M.exp(x)-1;},
-		log10:function(x){return M.log(x)*M.LOG10E;},
-		log1p:function(x){return M.log(1+x);},
-		log2:function(x){return M.log(x)*M.LOG2E;},
-		sinh:function(x){var y=M.exp(x);return (y-1/y)/2;},
-		tanh:function(x){if(Infinity===x){return 1;}if(-Infinity===x){return -1;}var y=M.exp(2*x);return (y-1)/(y+1);}
+		
+		// Math.acosh ( Number x )
+		acosh:function(x){
+			return M.log(x+M.sqrt(x*x-1));
+		},
+		
+		// Math.asinh ( Number x )
+		asinh:function(x){
+			return -Infinity===x?x:M.log(x+M.sqrt(x*x+1));
+		},
+		
+		// Math.atanh ( Number x )
+		atanh:function(x){
+			return M.log((1+x)/(1-x))/2;
+		},
+		
+		// Math.cbrt ( Number x )
+		cbrt:function(x){
+			var y=M.pow(M.abs(x),1/3);
+			return x<0?-y:y;
+		},
+		
+		// Math.cosh ( Number x )
+		cosh:function(x){
+			return (M.exp(x)+M.exp(-x))/2;
+		},
+		
+		// Math.expm1 ( Number x )
+		expm1:function(x){
+			return M.exp(x)-1;
+		},
+		
+		// Math.log10 ( Number x )
+		log10:function(x){
+			return M.log(x)*M.LOG10E;
+		},
+		
+		// Math.log1p ( Number x )
+		log1p:function(x){
+			return M.log(1+x);
+		},
+		
+		// Math.log2 ( Number x )
+		log2:function(x){
+			return M.log(x)*M.LOG2E;
+		},
+		
+		// Math.sinh ( Number x )
+		sinh:function(x){
+			var y=M.exp(x);return (y-1/y)/2;
+		},
+		
+		// Math.tanh ( Number x )
+		tanh:function(x){
+			if(Infinity===x){
+				return 1;
+			}
+			if(-Infinity===x){
+				return -1;
+			}
+			var y=M.exp(2*x);
+			return (y-1)/(y+1);
+		}
+		
+	});
+	
+	_e(N,{
+		
+		// Number.isNaN ( Any x )
+		isNaN:function(x){
+			
+		},
+		
+		// Number.isNumber ( Any x )
+		isNumber:function(x){
+			
+		},
+		
+		// Number.parseFloat ( Any x )
+		parseFloat:parseFloat,
+		
+		// Number.parseInt ( Any x )
+		parseInt:parseInt
+		
 	});
 	
 	_e(Np,{
-		atan:function(x){return arguments.length?M.atan2(this,x):M.atan(this);},
-		clamp:function(x,y){return N(this<x?x:y<this?y:this);},
-		clmax:function(x){return N(x<this?x:this);},
-		clmin:function(x){return N(this<x?x:this);},
+		
+		// Number.prototype.atan ( )
+		// Number.prototype.atan ( Number x )
+		atan:function(x){
+			return arguments.length?M.atan2(this,x):M.atan(this);
+		},
+		
+		// Number.prototype.clamp ( Number min , Number max )
+		clamp:function(x,y){
+			return N(this<x?x:y<this?y:this);
+		},
+		
+		// Number.prototype.clmax ( Number max )
+		clmax:function(x){
+			return N(x<this?x:this);
+		},
+		
+		// Number.prototype.clmin ( Number min )
+		clmin:function(x){
+			return N(this<x?x:this);
+		},
+		
+		// Number.prototype.digits ( )
 		digits:function(){
 			var s=S(this);
 			if(this<0){s=s.substr(1);}
@@ -31,6 +121,12 @@
 			else{
 				return [s,""];
 			}
+		},
+		
+		// Number.prototype.fraction ( )
+		/// Hackish...
+		fraction:function(){
+			return this!==this?0:N.parseFloat("0."+this.digits[1]);
 		},
 		
 		// Number.prototype.isEven ( )
@@ -45,7 +141,7 @@
 		
 		// Number.prototype.isFloat ( )
 		isFloat:function(){
-			
+			return 0===this.fraction();
 		},
 		
 		// Number.prototype.isInteger ( )
@@ -69,6 +165,7 @@
 		},
 		
 		// Number.prototype.random ( )
+		/// Crude.
 		random:function(){
 			return !N.isNaN(this)?M.random()*this:0;
 		},
@@ -152,44 +249,81 @@
 	});
 	
 	var _f=[
-			"abs","acos","acosh","asin","asinh","atanh",
-			"cbrt","ceil","cos","cosh",
-			"exp","expm1",
-			"floor",
-			"log","log10","log1p","log2",
-			"sin","sinh","sqrt",
-			"tan","tanh"
-		],
-		i=-1,
-		l=_f.length;
+		// Number.prototype.abs ( )
+		"abs",
+		
+		// Number.prototype.acos ( )
+		"acos",
+		
+		// Number.prototype.acosh ( )
+		"acosh",
+		
+		// Number.prototype.asin ( )
+		"asin",
+		
+		// Number.prototype.asinh ( )
+		"asinh",
+		
+		// Number.prototype.atanh ( )
+		"atanh",
+		
+		// Number.prototype.cbrt ( )
+		"cbrt",
+		
+		// Number.prototype.ceil ( )
+		/// TODO: Number.prototype.ceil ( Number precision )
+		"ceil",
+		
+		// Number.prototype.cos ( )
+		"cos",
+		
+		// Number.prototype.cosh ( )
+		"cosh",
+		
+		// Number.prototype.exp ( )
+		"exp",
+		
+		// Number.prototype.expm1 ( )
+		"expm1",
+		
+		// Number.prototype.floor ( )
+		/// TODO: Number.prototype.floor ( Number precision )
+		"floor",
+		
+		// Number.prototype.log ( )
+		/// TODO: Number.prototype.log ( Number base )
+		"log",
+		
+		// Number.prototype.log10 ( )
+		"log10",
+		
+		// Number.prototype.log1p ( )
+		"log1p",
+		
+		// Number.prototype.log2 ( )
+		"log2",
+		
+		// Number.prototype.sin ( )
+		"sin",
+		
+		// Number.prototype.sinh ( )
+		"sinh",
+		
+		// Number.prototype.sqrt ( )
+		"sqrt",
+		
+		// Number.prototype.tan ( )
+		"tan",
+		
+		// Number.prototype.tanh ( )
+		"tanh"
+		
+	],
+	i=-1,
+	l=_f.length;
 	while(++i<l){
 		Np[_f[i]]=new Function("return Math."+_f[i]+"(this);");
 	}
-	// Number.prototype.abs ( )
-	// Number.prototype.acos ( )
-	// Number.prototype.acosh ( )
-	// Number.prototype.asin ( )
-	// Number.prototype.asinh ( )
-	// Number.prototype.atanh ( )
-	// Number.prototype.cbrt ( )
-	// Number.prototype.ceil ( )
-	// TODO: Number.prototype.ceil ( [ Number precision = 1 ] )
-	// Number.prototype.cos ( )
-	// Number.prototype.cosh ( )
-	// Number.prototype.exp ( )
-	// Number.prototype.expm1 ( )
-	// Number.prototype.floor ( )
-	// TODO: Number.prototype.floor ( [ Number precision = 1 ] )
-	// Number.prototype.log ( )
-	/// TODO: Number.prototype.log ( Number base )
-	// Number.prototype.log10 ( )
-	// Number.prototype.log1p ( )
-	// Number.prototype.log2 ( )
-	// Number.prototype.sin ( )
-	// Number.prototype.sinh ( )
-	// Number.prototype.sqrt ( )
-	// Number.prototype.tan ( )
-	// Number.prototype.tanh ( )
 	
 	_e(Sp,{
 		
@@ -207,6 +341,7 @@
 		
 		// String.prototype.between ( String openingSymbol , String closingSymbol )
 		/// TODO: String.prototype.between ( String openingSymbol , String closingSymbol [ , Boolean allowEmbeded = false ] )
+		/// Or something along this line...
 		between:function(x,y){
 			x=S(x);
 			y=S(y);
@@ -300,14 +435,31 @@
 			
 		},
 		
+		/// String.toFloat ( )
+		
+		/// String.toInt ( )
+		/// String.toInt ( Number base )
+		/// String.toInt ( String alphabet [ , Boolean slipZero = false ] )
+		
 		// String.prototype.toKebab ( )
 		toKebab:function(){
 			
 		},
 		
+		/// String.prototype.toNumber ()
+		/// String.prototype.toNumber ( Number base )
+		/// String.prototype.toNumber ( String alphabet [ , Boolean skipZero = false ] )
+		
 		// String.prototype.toSlug ( )
-		toSlug:function(){},
-		words:function(f,c){}
+		toSlug:function(){
+			
+		},
+		
+		// String.prototype.words ( [ Function mapper [ , Any context = global ] ] )
+		words:function(f,c){
+			
+		}
+		
 	});
 })(
 	this,
