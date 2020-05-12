@@ -1,5 +1,6 @@
-(function(G,A,Ap,M,N,Np,S,Sp){
-	var _e=function(a,b){for(var k in b){a[k]=a[k]||b[k];}};
+(function(G,A,Ap,M,N,Np,Op,S,Sp){
+	var _e=function(a,b){for(var k in b){a[k]=a[k]||b[k];}},
+		_tS=function(a){return Op.toString.call(a);};
 	
 	_e(M,{
 		
@@ -72,12 +73,12 @@
 		
 		// Number.isNaN ( Any x )
 		isNaN:function(x){
-			
+			return x!==x;
 		},
 		
 		// Number.isNumber ( Any x )
 		isNumber:function(x){
-			
+			return !N.isNaN(x)&&"[object Number]"===_tS(x);
 		},
 		
 		// Number.parseFloat ( Any x )
@@ -466,5 +467,6 @@
 	Array,Array.prototype,
 	Math,
 	Number,Number.prototype,
+	Object.prototype,
 	String,String.prototype
 );
