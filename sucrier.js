@@ -85,6 +85,14 @@
 		return false;
 	};
 	
-	// [0.1.0] Boolean
+	// [0.1.0] Boolean Number.isNaN ( Any value )
+	N.isNaN=N.isNaN||function(a){
+		return a!==a;
+	};
+	
+	// [0.1.0] Boolean Number.isNumber ( Any value )
+	N.isNumber=N.isNumber||function(a){
+		return "[object Number]"===_tS(a)&&!$.isNaN(a);
+	};
 	
 })(this,Array,Math,Number,Object,String);
