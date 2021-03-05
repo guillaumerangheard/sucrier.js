@@ -295,6 +295,18 @@
 		return r;
 	};
 	
+	// [0.1.0] Number String.prototype.count ( String s )
+	//		   Borrowed from string.js.
+	Sp.count=function(a){
+		var i=this.indexOf(a),
+			r=0;
+		while(-1<i){
+			r++;
+			i=this.indexOf(a,i+1);
+		}
+		return r;
+	};
+	
 	// [0.1.0] String String.prototype.repeat ( Number times )
 	Sp.repeat=function(a){
 		var i=-1,
@@ -304,5 +316,27 @@
 		}
 		return r;
 	};
+	
+	// [0.1.0] String String.prototype.toCamel ( )
+	//		   Borrowed from string.js.
+	Sp.toCamel=function(){
+		return this
+			.trim()
+			.replace(/(\-|_|\s)+(.)?/g,function(a,b,c){
+				return c?c.toUpperCase():"";
+			});
+	};
+	
+	// [0.1.0] String String.prototype.toDashed ( )
+	//		   Borrowed from string.js.
+	Sp.toDashed=function(){
+		return this
+			.trim()
+			.replace(/[_\s]+/g,"-")
+			.replace(/([A-Z])/g,"-$1")
+			.toLowerCase();
+	};
+	
+	// [0.1.0] String String.prototype.trim ( )
 	
 })(this,Array,Math,Number,Object,String);
