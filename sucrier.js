@@ -1,4 +1,4 @@
-(function(root,A,M,N,O,S){
+(function(root,A,F,M,N,O,S){
 	var _fC=S.fromCharCode,
 		_tS=function(a){
 			return O.prototype.toString.call(a);
@@ -192,6 +192,27 @@
 		return r;
 	};
 	
+	// [x.x.x] String Number.prototype.toBase ( Number base )
+	// [x.x.x] String Number.prototype.toBase ( String base [ , hasZero = true ] )
+	
+	// [0.1.0] String Number.prototype.toBin ( )
+	// [0.1.0] String Number.prototype.toBinary ( )
+	Np.toBin=Np.toBinary=function(){
+		return N.isFinite(this)?this.abs().floor().toString(2):"0";
+	};
+	
+	// [0.1.0] String Number.prototype.toHex ( )
+	// [0.1.0] String Number.prototype.toHexadecimal ( )
+	Np.toHex=Np.toHexadecimal=function(){
+		return N.isFinite(this)?this.abs().floor().toString(16):"0";
+	};
+	
+	// [0.1.0] String Number.prototype.toOct ( )
+	// [0.1.0] String Number.prototype.toOctal ( )
+	Np.toOct=Np.toOctal=function(){
+		return N.isFinite(this)?this.abs().floor().toString(8):"0";
+	};
+	
 	// [0.1.0] String Number.prototype.toRoman ( [ Boolean unicode = false ] )
 	Np.toRoman=function(a){
 		var r="";
@@ -204,46 +225,46 @@
 			d=(u/10).floor();
 			u-=d*10;
 			if(a){
-				if(m){r+=_fC(0x216f).repeat(m);}								// 1000 - 9000
+				if(m){r+=_fC(0x216f).repeat(m);}							// 1000 - 9000	( "M" - "MMMMMMMMM" )
 				if(c){
-					if(8<c){r+=_fC(0x216d,0x216f);}								// 900
-					else if(4<c){r+=_fC(0x216e)+_fC(0x216d).repeat(c-5);}		// 500 - 800
-					else if(3<c){r+=_fC(0x216d,0x216e);}						// 400
-					else{r+=_fC(0x216d).repeat(c);}								// 100 - 300
+					if(8<c){r+="\u216d\u216f";}								// 900			( "CM" )
+					else if(4<c){r+="\u216e"+("\u216d").repeat(c-5);}		// 500 - 800	( "D" - "DCCC" )
+					else if(3<c){r+="\u216d\u0x216e";}						// 400			( "CD" )
+					else{r+=_fC("\u216d").repeat(c);}						// 100 - 300	( "C" - "CCC" )
 				}
 				if(12<d+u){
-					if(8<d){r+=_fC(0x2169,0x216d);}								// 90
-					else if(4<d){r+=_fC(0x216c)+_fC(0x2169).repeat(d-5);}		// 50 - 80
-					else if(3<d){r+=_fC(0x2169,0x216c);}						// 40
-					else{r+=_fC(0x2169).repeat(d);}								// 10 - 30
+					if(8<d){r+="\u2169\"216d";}								// 90			( "XC" )
+					else if(4<d){r+="\u216c"+("\u2169").repeat(d-5);}		// 50 - 80		( "L" - "LXXX" )
+					else if(3<d){r+="\u2169\u216c";}						// 40			( "XL" )
+					else{r+=("\u2169").repeat(d);}							// 10 - 30		( "X" - "XXX" )
 					if(u){
-						if(8<u){r+=_fC(0x2160,0x2169);}							// 9
-						else if(4<u){r+=_fC(0x2164)+_fC(0x2160).repeat(u-5);}	// 5 - 8
-						else if(3<u){r+=_fC(0x2160,0x2164);}					// 4
-						else{r+=_fC(0x2160).repeat(u);}							// 1 - 3
+						if(8<u){r+="\u2160\u2169";}							// 9			( "IX" )
+						else if(4<u){r+="\u2164"+("\u2160").repeat(u-5);}	// 5 - 8		( "V" - "VIII" )
+						else if(3<u){r+="\u2160\u2164";}					// 4			( "IV" )
+						else{r+=("\u2160").repeat(u);}						// 1 - 3		( "I" - "III" )
 					}
 				}
-				else{r+=_fC(0x215f+d+u);}										// 1 - 12
+				else{r+=_fC(0x215f+d+u);}									// 1 - 12		( "I" - "XII" )
 			}
 			else{
-				if(m){r+=("M").repeat(m);}										// 1000 - 9000
+				if(m){r+=("M").repeat(m);}									// 1000 - 9000	( "M" - "MMMMMMMMM" )
 				if(c){
-					if(8<c){r+="CM";}											// 900
-					else if(4<c){r+="D"+("C").repeat(c-5);}						// 500 - 800
-					else if(3<c){r+="CD";}										// 400
-					else{r+=("C").repeat(c);}									// 100 - 300
+					if(8<c){r+="CM";}										// 900			( "CM" )
+					else if(4<c){r+="D"+("C").repeat(c-5);}					// 500 - 800	( "D" - "DCCC" )
+					else if(3<c){r+="CD";}									// 400			( "CD" )
+					else{r+=("C").repeat(c);}								// 100 - 300	( "C" - "CCC" )
 				}
 				if(d){
-					if(8<d){r+="XC";}											// 90
-					else if(4<d){r+="L"+("X").repeat(c-5);}						// 50 - 80
-					else if(3<d){r+="XL";}										// 40
-					else{r+=("X").repeat(d);}									// 10 - 30
+					if(8<d){r+="XC";}										// 90			( "XC" )
+					else if(4<d){r+="L"+("X").repeat(c-5);}					// 50 - 80		( "L" - "LXXX" )
+					else if(3<d){r+="XL";}									// 40			( "XL" )
+					else{r+=("X").repeat(d);}								// 10 - 30		( "X" - "XXX" )
 				}
 				if(u){
-					if(8<u){r+="IX";}											// 9
-					else if(4<u){r+="V"+("I").repeat(c-5);}						// 5 - 8
-					else if(3<u){r+="IV";}										// 4
-					else{r+=("I").repeat(u);}									// 1 - 3
+					if(8<u){r+="IX";}										// 9			( "IX" )
+					else if(4<u){r+="V"+("I").repeat(c-5);}					// 5 - 8		( "V" - "VIII" )
+					else if(3<u){r+="IV";}									// 4			( "IV" )
+					else{r+=("I").repeat(u);}								// 1 - 3		( "I" - "III" )
 				}
 			}
 		}
@@ -386,4 +407,4 @@
 	
 	// [x.x.x] String String.prototype.unescapeHTML ( )
 	
-})(this,Array,Math,Number,Object,String);
+})(this,Array,Function,Math,Number,Object,String);
