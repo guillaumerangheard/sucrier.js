@@ -13,6 +13,7 @@
 	};
 	
 	// [0.1.0] Variable Array.prototype.at ( Number index )
+	// [x.x.x] Array    Array.prototype.at ( Number i1 , ... , Number iN )
 	Ap.at=function(a){
 		if(N.isInteger(a)&&this.length){
 			return 0<=a?this[a]:this[this.length+a];
@@ -276,6 +277,11 @@
 		return r;
 	};
 	
+	// [x.x.x] Boolean String.prototype.beginsWith ( String s )
+	
+	// [x.x.x] String String.prototype.between ( String left , String right )
+	//		   Borrowed from string.js.
+	
 	// [0.1.0] Number String.prototype.codeAt ( Number index )
 	// [0.1.0] Array  String.prototype.codeAt ( Number i1 , ... , Number iN )
 	Sp.codeAt=function(a){
@@ -307,6 +313,28 @@
 		return r;
 	};
 	
+	// [x.x.x] Boolean String.prototype.endsWith ( String s [ , Number from = 0 ] )
+	//Sp.endsWith=Sp.endsWith||function(a){};
+	
+	// [x.x.x] String String.prototype.escapeHTML ( )
+	
+	// [x.x.x] Array String.prototype.indicesOf ( String s )
+	
+	// [x.x.x] Boolean String.prototype.isAlpha ( )
+	// [x.x.x] Boolean String.prototype.isAlphaNumeric ( )
+	// [x.x.x] Boolean String.isHex ( )
+	// [x.x.x] Boolean String.isLowerCase ( )
+	// [x.x.x] Boolean String.isNumeric ( )
+	// [x.x.x] Boolean String.isOct ( )
+	// [x.x.x] Boolean String.isUpperCase ( )
+	
+	// [x.x.x] String.prototype.lpad ( Number length [ , String padWith = " " ] )
+	// Sp.padStart=Sp.padStart||function(a,b){};
+	// Sp.lpad=Sp.padStart;
+	
+	// [x.x.x] String String.prototype.ltrim ( )
+	// Sp.ltrim=Sp.trimStart||function(){};
+	
 	// [0.1.0] String String.prototype.repeat ( Number times )
 	Sp.repeat=function(a){
 		var i=-1,
@@ -316,6 +344,13 @@
 		}
 		return r;
 	};
+	
+	// [x.x.x] String.prototype.rpad ( Number length [ , String padWith = " " ] )
+	// Sp.padEnd=Sp.padEnd||function(a,b){};
+	// Sp.rpad=Sp.padEnd;
+	
+	// [x.x.x] String String.prototype.rtrim ( )
+	// Sp.rtrim=Sp.trimEnd||function(){};
 	
 	// [0.1.0] String String.prototype.toCamel ( )
 	//		   Borrowed from string.js.
@@ -338,5 +373,11 @@
 	};
 	
 	// [0.1.0] String String.prototype.trim ( )
+	//		   Borrowed from MDN.
+	Sp.trim=Sp.trim||function(){
+		return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,"");
+	};
+	
+	// [x.x.x] String String.prototype.unescapeHTML ( )
 	
 })(this,Array,Math,Number,Object,String);
