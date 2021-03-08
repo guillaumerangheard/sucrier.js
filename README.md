@@ -103,6 +103,12 @@
 
 #### .trunc ( )
 
+## Object
+
+### Static methods
+
+#### .fromQuery ( String s )
+
 ## String
 
 ### Static methods
