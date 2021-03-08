@@ -1,4 +1,4 @@
-(function(root,A,F,M,N,O,S){
+(function(root,A,B,F,M,N,O,S){
 	var _fC=S.fromCharCode,
 		_tS=function(a){
 			return O.prototype.toString.call(a);
@@ -18,6 +18,50 @@
 		if(N.isInteger(a)&&this.length){
 			return 0<=a?this[a]:this[this.length+a];
 		}
+	};
+	
+	// [0.1.0] Boolean Array.prototype.toBool ( )
+	// [0.1.0] Boolean Array.prototype.toBoolean ( )
+	Ap.toBool=Ap.toBoolean=function(){
+		return true;
+	};
+	
+	// [0.1.0] Boolean Boolean.and ( Boolean b1 , Boolean b2 )
+	B.and=function(a,b){
+		if(arguments.length<3){
+			return a&&b;
+		}
+		var A=arguments,
+			i=0,l=A.length,
+			r=a;
+		while(++i<l){
+			r=r&&A[i]
+		}
+		return r;
+	};
+	
+	// [0.1.0] Boolean Boolean.or ( Boolean b1 , Boolean b2 )
+	B.or=function(a,b){
+		if(arguments.length<3){
+			return a||b;
+		}
+		var A=arguments,
+			i=0,l=A.length,
+			r=a;
+		while(++i<l){
+			r=r||A[i]
+		}
+		return r;
+	};
+	
+	// [0.1.0] Boolean Boolean.not ( Boolean b )
+	B.not=function(a){
+		return !a;
+	};
+	
+	// [0.1.0] Boolean Boolean.xor ( Boolean b1 , Boolean b2 )
+	B.xor=function(a,b){
+		return (a||b)&&!(a&&b);
 	};
 	
 	// [0.1.0] Number Math.acosh ( Number n )
@@ -201,6 +245,12 @@
 		return N.isFinite(this)?this.abs().floor().toString(2):"0";
 	};
 	
+	// [0.1.0] Boolean Number.prototype.toBool ( )
+	// [0.1.0] Boolean Number.prototype.toBoolean ( )
+	Np.toBool=Np.toBoolean=function(){
+		return 0!==this&&this===this&&-Infinity!==this&&Infinity===this;
+	};
+	
 	// [0.1.0] String Number.prototype.toHex ( )
 	// [0.1.0] String Number.prototype.toHexadecimal ( )
 	Np.toHex=Np.toHexadecimal=function(){
@@ -379,6 +429,12 @@
 		return this.replace(/<\/?[^>]+>/g,"");
 	};
 	
+	// [0.1.0] Boolean String.prototype.toBool ( )
+	// [0.1.0] Boolean String.prototype.toBoolean ( )
+	Sp.toBool=Sp.toBoolean=function(){
+		return 0<this.length;
+	};
+	
 	// [0.1.0] String String.prototype.toCamel ( )
 	//		   Borrowed from string.js.
 	Sp.toCamel=function(){
@@ -391,7 +447,7 @@
 	
 	// [0.1.0] String String.prototype.toDashed ( )
 	//		   Borrowed from string.js.
-	Sp.toDashed=function(){
+	Sp.toDashed=Sp.toKebab=function(){
 		return this
 			.trim()
 			.replace(/[_\s]+/g,"-")
@@ -407,4 +463,4 @@
 	
 	// [x.x.x] String String.prototype.unescapeHTML ( )
 	
-})(this,Array,Function,Math,Number,Object,String);
+})(this,Array,Boolean,Function,Math,Number,Object,String);
