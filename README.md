@@ -3,19 +3,29 @@
 
 ## Array
 
-### Static functions
+### Static methods
 
 #### .isArray ( *Any value* )
 
-### Instance functions
+### Instance methods
 
 #### .at ( *Number i1* [ , ... , *Number iN* ] )
 
+#### .avg ( [ Function *getter* [ , Any *context* = *root* ] )
+
 ## Boolean
 
-### Static functions
+### Static methods
 
 #### .isBoolean ( *Any value* )
+
+#### .and ( Boolean *b1* , Boolean *b2* [ , ... Boolean *bN* ] )
+
+#### .not ( Boolean b )
+
+#### .or ( Boolean *b1* , Boolean *b2* [ , ... Boolean *bN* ] )
+
+#### .xor ( Boolean *b1* , Boolean *b2* [ , ... Boolean *bN* ] )
 
 ### Instance functions
 
@@ -51,6 +61,18 @@
 
 #### .cosh ( )
 
+#### .exp ( )
+
+#### .expm1 ( )
+
+#### .isEven ( )
+
+#### .isInteger ( )
+
+#### .isMultipleOf ( )
+
+#### .isOdd ( )
+
 #### .sign [ Number *sign* ] )
 
 #### .sin ( )
@@ -61,4 +83,22 @@
 
 #### .tanh ( )
 
+#### .toBase ( Number base )
+
+#### .toBase ( String base [ , zero = true ] )
+
+#### .toBin ( )
+
+#### .toHex ( )
+
+#### .toOct ( )
+
+#### .toRoman ( [ Boolean *unicode* = false ] )
+
 ## String
+
+### Static methods
+
+#### .isString ( Any *value* )
+
+### Instance methods
