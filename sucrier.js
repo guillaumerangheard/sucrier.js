@@ -352,6 +352,12 @@
 	// [x.x.x] String String.prototype.rtrim ( )
 	// Sp.rtrim=Sp.trimEnd||function(){};
 	
+	// [0.1.0] String String.prototype.stripTags ( )
+	//		   Borrowed from underscore.string.
+	Sp.stripTags=function(){
+		return this.replace(/<\/?[^>]+>/g,"");
+	};
+	
 	// [0.1.0] String String.prototype.toCamel ( )
 	//		   Borrowed from string.js.
 	Sp.toCamel=function(){
