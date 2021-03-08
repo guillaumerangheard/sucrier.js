@@ -39,6 +39,8 @@
 
 #### .tanh ( Number *n* )
 
+#### .trunc ( )
+
 ## Number
 
 ### Static methods
@@ -63,6 +65,8 @@
 
 #### .exp ( )
 
+#### .floor ( [ Number _precision_ = 1 ] )
+
 #### .expm1 ( )
 
 #### .isEven ( )
@@ -72,6 +76,8 @@
 #### .isMultipleOf ( )
 
 #### .isOdd ( )
+
+#### .round ( [ Number _precision_ = 1 ] )
 
 #### .sign [ Number *sign* ] )
 
@@ -95,6 +101,8 @@
 
 #### .toRoman ( [ Boolean *unicode* = false ] )
 
+#### .trunc ( )
+
 ## String
 
 ### Static methods
@@ -102,3 +110,49 @@
 #### .isString ( Any *value* )
 
 ### Instance methods
+
+#### .at ( Number index [ , ... , Number iN ] )
+
+#### .beginsWith ( String s )
+
+#### .chars ( [ Function mapper [ , Any context = root ] )
+(Alias: **characters**, **eachCharacter**.)
+
+#### .codeAt ( Number i1 [ , ... , Number iN ] )
+
+#### .codePoints ( { Function mapper [ , Any context = root ] ] )
+(Alias: **eachCodePoint**.)
+
+#### .codes ( { Function mapper [ , Any context = root ] ] )
+(Alias **eachCode**.)
+
+#### .endsWith ( String s )
+
+#### .escapeHTML ( )
+
+#### .left ( [ Number count = 1 ] )
+(Alias: **first**.)
+
+#### .lpad ( Number length [ , String padWith = " " ] )
+
+#### .ltrim ( )
+
+#### .removeDiacritics ( )
+
+#### .right ( [ Number count = 1 ] )
+(Alias: **last**.)
+
+#### .rpad ( Number length [ , String padWith = " " ] )
+
+#### .rtrim ( )
+
+#### .toCamel ( )
+
+#### .toDashed ( )
+(Alias: **toKebab**.)
+
+#### .toSlug ( )
+
+#### .trim ( )
+
+#### .unescapeHTML ( )
