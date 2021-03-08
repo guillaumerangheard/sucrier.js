@@ -5,9 +5,11 @@
 
 ### Static functions
 
-#### Array.isArray ( *Any value* )
+#### *Boolean* Array.isArray ( *Any value* )
 
 ### Instance functions
+
+#### *Variable* Array.at ( *Number i1* [ , ... , Number iN ] )
 
 ## Boolean
 
