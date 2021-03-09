@@ -1,18 +1,40 @@
 (function(root,M,N){
 	// [0.1.0] Vec2 ( Number x , Number y )
-	var V=function Vec2(x,y){
- 			if(!V.isVec2(this)){return new V(x,y);}
-			this.x=x||0;this.y=y||0;
+	var V2=function Vec2(x,y){
+ 			if(!V2.isVec2(this)){
+				return new V2(x,y);
+			}
+			this.x=N.isFinite(x)?x:0;
+			this.y=N.isFinite(y)?y:0;
 		},
-		Vp=V.prototype;
+		V2p=V2.prototype,
+		V3=function Vec3(x,y,z){
+			if(!V3.isVec3(this)){
+				return new V3(x,y,z);
+			}
+			this.x=N.isFinite(x)?x:0;
+			this.y=N.isFinite(y)?y:0;
+			this.z=N.isFinite(z)?z:0;
+		},
+		V3p=V3.prototype,
+		V4=function Vec4(x,y,z,w){
+			if(!V4.isVec4(this)){
+				return new V4(x,y,z,w);
+			}
+			this.x=N.isFinite(x)?x:0;
+			this.y=N.isFinite(y)?y:0;
+			this.z=N.isFinite(z)?z:0;
+			this.w=N.isFinite(w)?w:0;
+		},
+		V4p=V4.prototype;
 	
 	// [0.1.0] Vec2 Vec.add ( Vec2 v1 , Vec2 v2 [ , ... Vec2 vN ] )
-	V.add=function(a,b){
-		if(arguments.length<3){
-			return V(a.x+b.x,a.y+b.y);
+	V2.add=function(a,b){
+		if(2===arguments.length){
+			return V2.isVec2(a)&&V2.isVec2(b)?V2(a.x+b.x,a.y+b.y):V2();
 		}
 		else{
-			var A=arguments,i=0,l=A.length,r=V(a.x,a.y);
+			var A=arguments,i=0,l=A.length,r=V2(a.x,a.y);
 			while(++i<l){
 				r.x+=A[i].x;
 				r.y+=A[i].y;
@@ -23,13 +45,13 @@
 	
 	// [0.1.0] Number Vec2.cdist ( Vec2 v1 , Vec v2 )
 	// [0.1.0] Number Vec2.cDistance ( Vec2 v1 , Vec v2 )
-	V.cdist=V.cDistance=function(a,b){
+	V2.cdist=V2.cDistance=function(a,b){
 		return M.max((a.x-b.x).abs(),(a.y-b.y).abs());
 	};
 	
-	// [0.1.0] Boolean Vec.col ( Vec2 v1 , Vec2 v2 [ , Number threshold = Vec2.eq.threshold ] )
-	// [0.1.0] Boolean Vec.colinear ( Vec2 v1 , Vec2 v2 [ , Number threshold = Vec2.eq.threshold ] )
-	V.col=V.colinear=function(a,b){
+	// [0.1.0] Boolean Vec2.col ( Vec2 v1 , Vec2 v2 [ , Number threshold = Vec2.eq.threshold ] )
+	// [0.1.0] Boolean Vec2.colinear ( Vec2 v1 , Vec2 v2 [ , Number threshold = Vec2.eq.threshold ] )
+	V2.col=V2.colinear=function(a,b){
 		return a.x/b.x===a.y/b.x;
 	};
 	
