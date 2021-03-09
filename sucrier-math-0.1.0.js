@@ -1,11 +1,8 @@
 (function(root,M,N){
 	// [0.1.0] Vec2 ( Number x , Number y )
 	var V=function Vec2(x,y){
- 			if(!V.isVec2(this)){
-				return new V(x,y);
-			}
-			this.x=x||0;
-			this.y=y||0;
+ 			if(!V.isVec2(this)){return new V(x,y);}
+			this.x=x||0;this.y=y||0;
 		},
 		Vp=V.prototype;
 	
@@ -15,10 +12,7 @@
 			return V(a.x+b.x,a.y+b.y);
 		}
 		else{
-			var A=arguments,
-				i=0,
-				l=A.length,
-				r=V(a.x,a.y);
+			var A=arguments,i=0,l=A.length,r=V(a.x,a.y);
 			while(++i<l){
 				r.x+=A[i].x;
 				r.y+=A[i].y;
@@ -42,8 +36,7 @@
 	// [0.1.0] Number Vec.dist ( Vec2 v1 , Vec2 v2 )
 	// [0.1.0] Number Vec.distance ( Vec2 v1 , Vec2 v2 )
 	V.dist=V.distance=function(a,b){
-		var x=a.x-b.x,
-			y=a.y-b.y;
+		var x=a.x-b.x,y=a.y-b.y;
 		return (x*x+y*y).sqrt();
 	};
 	
@@ -91,8 +84,7 @@
 	// [0.1.0] Number Vec.sdist ( Vec2 v1 , Vec2 v2 )
 	// [0.1.0] Number Vec.sDistance ( Vec2 v1 , Vec2 v2 )
 	V.sdist=V.sDistance=function(a,b){
-		var x=a.x-b.x,
-			y=a.y-b.y;
+		var x=a.x-b.x,y=a.y-b.y;
 		return x*x+y*y;
 	};
 	
@@ -102,10 +94,7 @@
 			return V(a.x-b.x,a.y-b.y);
 		}
 		else{
-			var A=arguments,
-				i=0,
-				l=A.length,
-				r=V(a.x,a.y);
+			var A=arguments,i=0,l=A.length,r=V(a.x,a.y);
 			while(++i<l){
 				r.x-=A[i].x;
 				r.y-=A[i].y;
@@ -133,9 +122,7 @@
 			this.y+=a.y;
 		}
 		else{
-			var A=arguments,
-				i=-1,
-				l=A.length;
+			var A=arguments,i=-1,l=A.length;
 			while(++i<l){
 				this.x+=A[i].x;
 				this.y+=A[i].y;
@@ -208,9 +195,7 @@
 			this.y-=a.y;
 		}
 		else{
-			var A=arguments,
-				i=-1,
-				l=A.length;
+			var A=arguments,i=-1,l=A.length;
 			while(++i<l){
 				this.x-=A[i].x;
 				this.y-=A[i].y;
@@ -245,12 +230,8 @@
 
 (function(root,M,N){
 	var V=function Vec3(x,y,z){
-			if(!V.isVec3(this)){
-				return new V(x,y,z);
-			}
-			this.x=x||0;
-			this.y=y||0;
-			this.z=z||0;
+			if(!V.isVec3(this)){return new V(x,y,z);}
+			this.x=x||0;this.y=y||0;this.z=z||0;
 		},
 		Vp=V.prototype;
 	
