@@ -40,6 +40,13 @@
 		return r;
 	};
 	
+	// [0.1.0] Boolean Boolean.isBool ( Any value )
+	// [0.1.0] Boolean Boolean.isBoolean ( Any value )
+	// Borrowed from is.js 0.9.0.
+	B.isBool=B.isBoolean=function(a){
+		return true===a||false===a||"[object Boolean]"===_tS(a);
+	};
+	
 	// [0.1.0] Boolean Boolean.or ( Boolean b1 , Boolean b2 )
 	B.or=function(a,b){
 		if(arguments.length<3){
@@ -177,12 +184,15 @@
 	// [0.1.0] Number Number.prototype.atan ( )
 	// [0.1.0] Number Number.prototype.atan ( Number x )
 	Np.atan=function(a){
-		return arguments.length?M.atan2(this,a):M.atan(this);
+		return N.isFinite(a)?M.atan2(this,a):M.atan(this);
 	};
  	
  	// [0.1.0] Number Number.prototype.clamp ( Number nMin , Number nMax )
  	Np.clamp=function(a,b){
-		return this<a?a:b<this?b:this;
+		if(N.isFinite(a)&&N.isFinite(b)){
+			return this<a?a:b<this?b:this;
+		}
+		return 0+this;
 	};
 	
 	// [0.1.0] Boolean Number.prototype.isEven ( )
@@ -192,7 +202,7 @@
 	
 	// [0.1.0] Boolean Number.prototype.isMultipleOf ( Number n )
 	Np.isMultipleOf=function(a){
-		return 0===this%a;
+		return N.isFinite(a)?0===this%a:false;
 	};
 	
 	// [0.1.0] Boolean Number.prototype.isOdd ( )
@@ -200,14 +210,20 @@
 		return 0!==this%2;
 	};
 	
+	// [0.1.0] Boolean Number.prototype.isWithin ( Number nMin , Number nMax )
+	// Borrowed from is.js 0.9.0.
+	Np.isWithin=function(a,b){
+		return N.isNumber(a)&&N.isNumber(b)?a<=this&&this<=b:false;
+	};
+	
 	// [0.1.0] Number Number.prototype.log ( [ Number base = Math.E ] )
 	Np.log=function(a){
-		return M.log(this)/(b?M.log(b):1);
+		return M.log(this)/(N.isFinite(a)?M.log(a):1);
 	};
 	
 	// [0.1.0] Number Number.prototype.pow ( Number n )
 	Np.pow=function(a){
-		return M.pow(this,a);
+		return N.isFinite(a)?M.pow(this,a):0;
 	};
 	
 	// [0.1.0] Number Number.prototype.sign ( )
@@ -243,6 +259,7 @@
 	// [0.1.0] String Number.prototype.toBinary ( )
 	Np.toBin=Np.toBinary=function(){
 		return N.isFinite(this)?this.abs().floor().toString(2):"0";
+		// return this.toBase(2);
 	};
 	
 	// [0.1.0] Boolean Number.prototype.toBool ( )
@@ -255,12 +272,14 @@
 	// [0.1.0] String Number.prototype.toHexadecimal ( )
 	Np.toHex=Np.toHexadecimal=function(){
 		return N.isFinite(this)?this.abs().floor().toString(16):"0";
+		// return this.toBase(16);
 	};
 	
 	// [0.1.0] String Number.prototype.toOct ( )
 	// [0.1.0] String Number.prototype.toOctal ( )
 	Np.toOct=Np.toOctal=function(){
 		return N.isFinite(this)?this.abs().floor().toString(8):"0";
+		// return this.toBase(8)
 	};
 	
 	// [0.1.0] String Number.prototype.toRoman ( [ Boolean unicode = false ] )
@@ -351,7 +370,7 @@
 	// [x.x.x] Boolean String.prototype.beginsWith ( String s )
 	
 	// [x.x.x] String String.prototype.between ( String left , String right )
-	//		   Borrowed from string.js.
+	// Borrowed from string.js.
 	
 	// [0.1.0] Number String.prototype.codeAt ( Number index )
 	// [0.1.0] Array  String.prototype.codeAt ( Number i1 , ... , Number iN )
@@ -362,9 +381,7 @@
 		}
 		else{
 			r=[];
-			var A=arguments,
-				i=-1,
-				l=A.length;
+			var A=arguments,i=-1,l=A.length;
 			while(++i<l){
 				r.push(this.charCodeAt(A[i])||0);
 			}
@@ -373,10 +390,9 @@
 	};
 	
 	// [0.1.0] Number String.prototype.count ( String s )
-	//		   Borrowed from string.js.
+	// Borrowed from string.js.
 	Sp.count=function(a){
-		var i=this.indexOf(a),
-			r=0;
+		var i=this.indexOf(a),r=0;
 		while(-1<i){
 			r++;
 			i=this.indexOf(a,i+1);
@@ -385,11 +401,15 @@
 	};
 	
 	// [x.x.x] Boolean String.prototype.endsWith ( String s [ , Number from = 0 ] )
-	//Sp.endsWith=Sp.endsWith||function(a){};
+	// Sp.endsWith=Sp.endsWith||function(a){};
 	
 	// [x.x.x] String String.prototype.escapeHTML ( )
 	
+	// [x.x.x] String.prototype.last ( [ Number count = 1 ] )
+	// Sp.last=Sp.right=function(a){};
+	
 	// [x.x.x] Array String.prototype.indicesOf ( String s )
+	// Sp.indicesOf=function(a){};
 	
 	// [x.x.x] Boolean String.prototype.isAlpha ( )
 	// [x.x.x] Boolean String.prototype.isAlphaNumeric ( )
@@ -404,12 +424,12 @@
 	// Sp.lpad=Sp.padStart;
 	
 	// [x.x.x] String String.prototype.ltrim ( )
-	// Sp.ltrim=Sp.trimStart||function(){};
+	// Sp.trimStart=Sp.trimStart||function(){};
+	// Sp.ltrim=Sp.trimStart;
 	
 	// [0.1.0] String String.prototype.repeat ( Number times )
 	Sp.repeat=function(a){
-		var i=-1,
-			r="";
+		var i=-1,r="";
 		while(++i<a){
 			r+=this;
 		}
@@ -421,10 +441,11 @@
 	// Sp.rpad=Sp.padEnd;
 	
 	// [x.x.x] String String.prototype.rtrim ( )
-	// Sp.rtrim=Sp.trimEnd||function(){};
+	// Sp.trimEnd=Sp.trimEnd||function(){};
+	// Sp.rtrim=Sp.trimEnd;
 	
 	// [0.1.0] String String.prototype.stripTags ( )
-	//		   Borrowed from underscore.string.
+	// Borrowed from underscore.string.
 	Sp.stripTags=function(){
 		return this.replace(/<\/?[^>]+>/g,"");
 	};
@@ -436,7 +457,7 @@
 	};
 	
 	// [0.1.0] String String.prototype.toCamel ( )
-	//		   Borrowed from string.js.
+	// Borrowed from string.js.
 	Sp.toCamel=function(){
 		return this
 			.trim()
@@ -446,7 +467,7 @@
 	};
 	
 	// [0.1.0] String String.prototype.toDashed ( )
-	//		   Borrowed from string.js.
+	// Borrowed from string.js.
 	Sp.toDashed=Sp.toKebab=function(){
 		return this
 			.trim()
@@ -456,7 +477,7 @@
 	};
 	
 	// [0.1.0] String String.prototype.trim ( )
-	//		   Borrowed from MDN.
+	// Borrowed from MDN.
 	Sp.trim=Sp.trim||function(){
 		return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,"");
 	};
