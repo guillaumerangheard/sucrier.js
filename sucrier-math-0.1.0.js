@@ -1,291 +1,188 @@
-(function(root,M,N){
-	// [0.1.0] Vec2 ( Number x , Number y )
-	var V2=function Vec2(x,y){
- 			if(!V2.isVec2(this)){
-				return new V2(x,y);
-			}
-			this.x=N.isFinite(x)?x:0;
-			this.y=N.isFinite(y)?y:0;
-		},
-		V2p=V2.prototype,
-		V3=function Vec3(x,y,z){
-			if(!V3.isVec3(this)){
-				return new V3(x,y,z);
-			}
-			this.x=N.isFinite(x)?x:0;
-			this.y=N.isFinite(y)?y:0;
-			this.z=N.isFinite(z)?z:0;
-		},
-		V3p=V3.prototype,
-		V4=function Vec4(x,y,z,w){
-			if(!V4.isVec4(this)){
-				return new V4(x,y,z,w);
-			}
-			this.x=N.isFinite(x)?x:0;
-			this.y=N.isFinite(y)?y:0;
-			this.z=N.isFinite(z)?z:0;
-			this.w=N.isFinite(w)?w:0;
-		},
-		V4p=V4.prototype;
-	
-	// [0.1.0] Vec2 Vec.add ( Vec2 v1 , Vec2 v2 [ , ... Vec2 vN ] )
-	V2.add=function(a,b){
-		if(2===arguments.length){
-			return V2.isVec2(a)&&V2.isVec2(b)?V2(a.x+b.x,a.y+b.y):V2();
+(function(root,M,N,O){
+	// [0.1.0] Vec2 ( [ Number x = 0 , Number y = 0 ] )
+	function Vec2(x,y){
+		if(!(this instanceof Vec2)){
+			return new Vec2(x,y);
 		}
-		else{
-			var A=arguments,i=0,l=A.length,r=V2(a.x,a.y);
+		this.x=N.isFinite(x)?x:0;
+		this.y=N.isFinite(y)?y:0;
+	}
+	
+	O.extend(Vec2,{
+		
+		// [0.1.0] Vec2 Vec2.add ( Vec2 v1 , Vec2 v2 [ , ... , Vec2 vN ] )
+		add:function(a){
+			var A=arguments,
+				i=0,
+				l=A.length,
+				r=Vec2.isVec2(a)?Vec2(a.x,a.y):Vec2();
 			while(++i<l){
-				r.x+=A[i].x;
-				r.y+=A[i].y;
+				if(Vec2.isVec2(A[i])){
+					r.x+=A[i].x;
+					r.y+=A[i].y;
+				}
 			}
 			return r;
-		}
-	};
-	
-	// [0.1.0] Number Vec2.cdist ( Vec2 v1 , Vec v2 )
-	// [0.1.0] Number Vec2.cDistance ( Vec2 v1 , Vec v2 )
-	V2.cdist=V2.cDistance=function(a,b){
-		return M.max((a.x-b.x).abs(),(a.y-b.y).abs());
-	};
-	
-	// [0.1.0] Boolean Vec2.col ( Vec2 v1 , Vec2 v2 [ , Number threshold = Vec2.eq.threshold ] )
-	// [0.1.0] Boolean Vec2.colinear ( Vec2 v1 , Vec2 v2 [ , Number threshold = Vec2.eq.threshold ] )
-	V2.col=V2.colinear=function(a,b){
-		return a.x/b.x===a.y/b.x;
-	};
-	
-	// [0.1.0] Number Vec.dist ( Vec2 v1 , Vec2 v2 )
-	// [0.1.0] Number Vec.distance ( Vec2 v1 , Vec2 v2 )
-	V.dist=V.distance=function(a,b){
-		var x=a.x-b.x,y=a.y-b.y;
-		return (x*x+y*y).sqrt();
-	};
-	
-	// [0.1.0] Number Vec.div ( Vec2 v , Number n )
-	// [0.1.0] Number Vec.divide ( Vec2 v , Number n )
-	V.div=V.divide=function(a,b){
-		return b?V(a.x/b,a.y/b):V();
-	};
-	
-	// [0.1.0] Number Vec.dot ( Vec2 v1 , Vec2 v2 )
-	V.dot=function(a,b){
-		return a.x*b.x+a.y*b.y;
-	};
-	
-	// [0.1.0] Boolean Vec.eq ( Vec2 v1 , Vec2 v2 [ , Number threshold = Vec2.eq.threshold ] )
-	V.eq=function(a,b,t){
-		t=t||V.eq.threshold;
-		return (a.x-b.x).abs()<=t&&(a.y-b.y).abs()<=t;
-	};
-	V.eq.threshold=.0001;
-	
-	// [0.1.0] Boolean Vec2.isVec2 ( Any value )
-	V.isVec2=function(a){
-		return a instanceof V;
-	};
-	
-	// [0.1.0] Number Vec2.mdist ( Vec2 v1 , Vec2 v2 )
-	// [0.1.0] Number Vec2.mDistance ( Vec2 v1 , Vec2 v2 )
-	V.mdist=V.mDistance=function(a,b){
-		return (a.x-b.x).abs()+(a.y-b.y).abs();
-	};
-	
-	// [0.1.0] Number Vec.mul ( Vec2 v , Number n )
-	// [0.1.0] Number Vec.multiply ( Vec2 v , Number n )
-	V.mul=V.multiply=function(a,b){
-		return V(a.x*b,a.y*b);
-	};
-	
-	// [0.1.0] Vec2 Vec2.normalize ( Vec2 v )
-	V.norm=V.normalize=function(a){
-		var m=a.mag();
-		return m?V(a.x/m,a.y/m):V();
-	};
-	
-	// [0.1.0] Number Vec.sdist ( Vec2 v1 , Vec2 v2 )
-	// [0.1.0] Number Vec.sDistance ( Vec2 v1 , Vec2 v2 )
-	V.sdist=V.sDistance=function(a,b){
-		var x=a.x-b.x,y=a.y-b.y;
-		return x*x+y*y;
-	};
-	
-	// [0.1.0] Vec2 Vec.sub ( Vec2 v1 , Vec2 v2 [ , ... Vec2 vN ] )
-	V.sub=V.substract=function(a,b){
-		if(arguments.length<3){
-			return V(a.x-b.x,a.y-b.y);
-		}
-		else{
-			var A=arguments,i=0,l=A.length,r=V(a.x,a.y);
-			while(++i<l){
-				r.x-=A[i].x;
-				r.y-=A[i].y;
-			}
-			return r;
-		}
-	};
-	
-	// [0.1.0] Vec2.div ( Vec2 v , Number n )
-	// [0.1.0] Vec2.divide ( Vec2 v , Number n )
-	V.vdiv=V.vDivide=function(a,b){
-		return V(b.x?a.x/b.x:0,b.y?a.y/b.y:0);
-	};
-	
-	// [0.1.0] Vec2.mul ( Vec2 v , Number n )
-	// [0.1.0] Vec2.multiply ( Vec2 v , Number n )
-	V.vmul=V.vMultiply=function(a,b){
-		return V(a.x*b.x,a.y*b.y);
-	};
-	
-	// [0.1.0] Vec2 Vec2.prototype.add ( Vec2 v1 [ , ... , Vec2 vN ] )
-	Vp.add=function(a){
-		if(1===arguments.length){
-			this.x+=a.x;
-			this.y+=a.y;
-		}
-		else{
-			var A=arguments,i=-1,l=A.length;
-			while(++i<l){
-				this.x+=A[i].x;
-				this.y+=A[i].y;
-			}
-		}
-		return this;
-	};
-	
-	// [0.1.0] Number Vec2.prototype.cmag ( )
-	Vp.cmag=Vp.cMagnitude=function(){
-		return M.max(this.x.abs(),this.y.abs());
-	};
-	
-	// [0.1.0] Vec2 Vec2.prototype.div ( Number n )
-	// [0.1.0] Vec2 Vec2.prototype.divide ( Number n )
-	Vp.div=Vp.divide=function(a){
-		if(a){
-			this.x/=a;
-			this.y/=a;
-		}
-		else{
-			this.x=this.y=0;
-		}
-		return this;
-	};
-	
-	// [0.1.0] Boolean Vec2.prototype.isUnit (  )
-	// [x.x.x] Boolean Vec2.prototype.isUnit ( Number threshold = Vec2.eq.threshold )
-	Vp.isUnit=function(){
-		return 1===this.mag();
-	};
-	
-	// [0.1.0] Number Vec2.mag ( )
-	// [0.1.0] Number Vec2.magnitude ( )
-	Vp.mag=Vp.magnitude=function(){
-		return (this.x*this.x+this.y*this.y).sqrt();
-	};
-	
-	// [0.1.0] Number Vec2.prototype.mmag ( )
-	// [0.1.0] Number Vec2.prototype.mMagnitude ( )
-	Vp.mmag=Vp.mMagnitude=function(){
-		return this.x.abs()+this.y.abs();
-	};
-	
-	// [0.1.0] Vec2 Vec2.prototype.mul ( Nmber n )
-	// [0.1.0] Vec2 Vec2.prototype.multiply ( Nmber n )
-	Vp.mul=Vp.multiply=function(a){
-		this.x*=a;
-		this.y*=a;
-		return this;
-	};
-	
-	// [0.1.0] Vec2 Vec2.prototype.norm ( )
-	// [0.1.0] Vec2 Vec2.prototype.normalize ( )
-	Vp.norm=Vp.normalize=function(){
-		return this.div(this.mag());
-	};
-	
-	// [0.1.0] Number Vec2.prototype.smag ( )
-	// [0.1.0] Number Vec2.prototype.sMagnitude ( )
-	Vp.smag=Vp.sMagnitude=function(){
-		return this.x*this.x+this.y*this.y;
-	};
-	
-	// [0.1.0] Vec2 Vec2.prototype.sub ( Vec2 v1 [ , ... , Vec2 vN ] )
-	// [0.1.0] Vec2 Vec2.prototype.substract ( Vec2 v1 [ , ... , Vec2 vN ] )
-	Vp.sub=Vp.substract=function(a){
-		if(1===arguments.length){
-			this.x-=a.x;
-			this.y-=a.y;
-		}
-		else{
-			var A=arguments,i=-1,l=A.length;
-			while(++i<l){
-				this.x-=A[i].x;
-				this.y-=A[i].y;
-			}
-		}
-		return this;
-	};
-	
-	// [0.1.0] String Vec2.prototype.toString ( )
-	Vp.toString=function(){
-		return "Vec2 x: "+this.x+" , y: "+this.y;
-	};
-	
-	// [0.1.0] Vec2 Vec2.prototype.vdiv ( Vec2 v )
-	// [0.1.0] Vec2 Vec2.prototype.vDivide ( Vec2 v )
-	Vp.vdiv=Vp.vDivide=function(a){
-		this.x=a.x?this.x/a.x:0;
-		this.y=a.y?this.y/a.y:0;
-		return this;
-	};
-	
-	// [0.1.0] Vec2 Vec2.prototype.vmul ( Vec2 v )
-	// [0.1.0] Vec2 Vec2.prototype.vMultiply ( Vec2 v )
-	Vp.vmul=Vp.vMultiply=function(a){
-		this.x*=a.x;
-		this.y*=a.y;
-		return this;
-	};
-	
-	root.Vec2=V;
-})(this,Math,Number);
-
-(function(root,M,N){
-	var V=function Vec3(x,y,z){
-			if(!V.isVec3(this)){return new V(x,y,z);}
-			this.x=x||0;this.y=y||0;this.z=z||0;
 		},
-		Vp=V.prototype;
+		
+		// [0.1.0] Boolean Vec2.col ( Vec2 v1 , Vec2 v2 [ , Number threshold = Vec2.threshold ] )
+		col:function(a,b,t){
+			if(Vec2.isVec2(a)&&Vec2.isVec2(b)){
+				t=N.isNumber(t)?t:Vec2.threshold;
+				return ((b.x?a.x/b.x:0)-(b.y?a.y/b.y:0)).abs()<=t;
+			}
+		},
+		
+		// [0.1.0] Number Vec2.dist ( Vec2 v1 , Vec2 v2 )
+		dist:function(a,b){
+			if(Vec2.isVec2(a)&&Vec2.isVec2(b)){
+				var x=a.x-b.x,
+					y=a.y-b.y;
+				return (x*x+y*y).sqrt();
+			}
+			return Infinity;
+		},
+		
+		// [0.1.0] Vec2 Vec2.div ( Vec2 v , Number n )
+		div:function(a,b){
+			if(Vec2.isVec2(a)){
+				if(N.isFinite(b)){
+					if(0!==b){
+						return Vec2(a.x/b,a.y/b);
+					}
+				}
+			}
+			return Vec2();
+		},
+		
+		// [0.1.0] Number Vec2.dot ( Vec2 v1 , Vec2 v2 )
+		dot:function(a,b){
+			return Vec2.isVec2(a)&&Vec2.isVec2(b)?
+				a.x*b.x+a.y*b.y:
+				0;
+		},
+		
+		// [0.1.0] Boolean Vec2.eq ( Vec2 v1 , Vec2 v2 [ , Number threshold = Vec2.threshold ] )
+		eq:function(a,b,t){
+			if(Vec2.isVec2(a)&&Vec2.isVec2(b)){
+				t=t||Vec2.threshold;
+				return (a.x-b.x).abs()<=t&&(a.y-b.y).abs()<=t;
+			}
+		},
+		
+		// [0.1.0] Boolean Vec2.isVec2 ( Any value )
+		isVec2:function(a){
+			return a instanceof Vec2;
+		},
+		
+		// [0.1.0] Number Vec2.mdist ( Vec2 v1 , Vec2 v2 )
+		mdist:function(a,b){
+			return Vec2.isVec2(a)&&Vec2.isVec2(b)?
+				(a.x-b.x).abs()+(a.y-b.y).abs():
+				Infinity;
+		},
+		
+		// [0.1.0] Vec2 Vec2.mul ( Vec2 v , Number n )
+		mul:function(a,b){
+			if(Vec2.isVec2(a)){
+				return N.isFinite(b)?
+					Vec2(a.x*b,a.y*b):
+					Vec2(a.x,a.y);
+			}
+			return Vec2();
+		},
+		
+		// [0.1.0] Vec2 Vec2.norm ( Vec2 v )
+		norm:function(a){
+			if(Vec2.isVec2(a)){
+				var m=a.mag();
+				if(m){
+					return Vec2(a.x/m,a.y/m);
+				}
+			}
+			return Vec2();
+		},
+		
+		/*
+		sdist:function(a,b){},
+		sub:function(a){},
+		*/
+		threshold:1e-4/*,
+		vdiv:function(a,b){},
+		vmul:function(a,b){}
+		*/
+		
+	});
 	
-	// [0.1.0] Vec3.add
-	// [0.1.0] Vec3.cdist
-	// [0.1.0] Vec3.col
-	// [0.1.0] Vec3.cross
-	// [0.1.0] Vec3.dist
-	// [0.1.0] Vec3.div
-	// [0.1.0] Vec3.dot
-	// [0.1.0] Vec3.fromVec2
-	// [0.1.0] Vec3.isVec3
-	// [0.1.0] Vec3.mdist
-	// [0.1.0] Vec3.mul
-	// [0.1.0] Vec3.norm
-	// [0.1.0] Vec3.sdist
-	// [0.1.0] Vec3.sub
-	// [0.1.0] Vec3.vdiv
-	// [0.1.0] Vec3.vmul
+	O.extend(Vec2.prototype,{
+		
+		// [0.1.0] Vec2 Vec2.prototype.add ( Vec2 v1 [ , ... , Vec2 vN ] )
+		add:function(){
+			var A=arguments,
+				i=-1,
+				l=A.length;
+			while(++i<l){
+				if(Vec2.isVec2(A[i])){
+					this.x+=A[i].x;
+					this.y+=A[i].y;
+				}
+			}
+			return this;
+		},
+		
+		/*
+		cmag:function(){},
+		div:function(a){},
+		*/
+		
+		// [0.1.0] Boolean Vec2.prototype.isNull ( [ Number threshold = Vec2.threshold ] )
+		isNull:function(t){
+			t=N.isNumber(t)?t:Vec2.threshold;
+			return this.x.abs()<=t&&this.y.abs()<=t;
+		},
+		
+		// [0.1.0] Boolean Vec2.prototype.isUnit ( [ Number threshold = Vec2.threshold ] )
+		isUnit:function(t){
+			t=t||Vec2.threshold;
+			return (1-this.mag()).abs()<=t;
+		},
+		
+		// [0.1.0] Number Vec2.prototype.mag ( )
+		mag:function(){
+			return (this.x*this.x+this.y*this.y).sqrt();
+		}/*,
+		mmag:function(){},
+		mul:function(a){},
+		sub:function(){},
+		vdiv:function(a){},
+		vmul:function(a){}
+		*/
+		
+	});
 	
-	// [0.1.0] Vec3.prototype.add
-	// [0.1.0] Vec3.prototype.cmag
-	// [0.1.0] Vec3.prototype.div
-	// [0.1.0] Vec3.prototype.isUnit
-	// [0.1.0] Vec3.prototype.mag
-	// [0.1.0] Vec3.prototype.mmag
-	// [0.1.0] Vec3.prototype.mul
-	// [0.1.0] Vec3.prototype.norm
-	// [0.1.0] Vec3.prototype.smag
-	// [0.1.0] Vec3.prototype.sub
-	// [0.1.0] Vec3.prototype.vdiv
-	// [0.1.0] Vec3.prototype.vmul
+	root.Vec2=Vec2;
 	
-	root.Vec3=V;
-})(this,Math,Number);
+	function Vec3(x,y,z){
+		if(!(this instanceof Vec3)){
+			return new Vec3(x,y,z);
+		}
+		this.x=N.isFinite(x)?x:0;
+		this.y=N.isFinite(y)?y:0;
+		this.z=N.isFinite(z)?z:0;
+	}
+	
+	root.Vec3=Vec3;
+	
+	function Vec4(x,y,z,w){
+		if(!(this instanceof Vec4)){
+			return new Vec4(x,y,z,w);
+		}
+		this.x=N.isFinite(x)?x:0;
+		this.y=N.isFinite(y)?y:0;
+		this.z=N.isFinite(z)?z:0;
+		this.w=N.isFinite(w)?w:0;
+	}
+	
+	root.Vec4=Vec4;
+	
+})(this,Math,Number,Object);
