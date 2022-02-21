@@ -1,20 +1,6 @@
-(function(){
+(function(Np){
 	
-	var _p=function(n){
-			var r=[0,0,0];
-			r[0]=n<0?-1:(0<n?1:0);
-			if(r[0]){
-				r[1]=n.abs();
-				r[2]=r[1]-r[1].floor();
-				if(r[2]){
-					while(!r[2].isInt()){
-						r[2]*=10;
-					}
-				}
-			}
-		},
-		
-		_r=function(n,i,v,x){
+	var _r=function(n,i,v,x){
 			return n<4?
 					   i.repeat(n):
 					   (4===n?
@@ -51,20 +37,17 @@
 			return r;
 		};
 	
-	// [0.1] String Number.prototype.toRoman ( [ String type = "ascii" | "html" | "unicode" [ , Boolean lowercase = false ] ] )
-	Number.prototype.toRoman=function(t,l){
-		t=t||"ascii";
-		l=Boolean.isBool(l)?l:false;
-		var p=_p(this),
-			r=p[0]<0?"-":"";
-		switch(t){
-			case"ascii":
-				
-			case"html":
-				
-			case"unicode":
-				
-		}
+	// [x.x] String Number.prototype.toHTMLRoman ( [ Boolean lowerCase = false ] )
+	
+	// [0.1] String Number.prototype.toRoman ( [ Boolean lowerCase = false ] )
+	Np.toRoman=function(l){
+		var n=this.abs().trunc();
+		return (this<0?"-":"")+
+			   (l?
+				  _R(n,"i","v","x","l","c","d","m"):
+				  _R(n,"I","V","X","L","C","D","M"));
 	};
 	
-})();
+	// [x.x] String Number.prototype.toUnicodeRoman ( [ Boolean lowerCase = false ] )
+	
+})(Number.prototype);
