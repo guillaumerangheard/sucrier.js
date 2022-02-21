@@ -1,78 +1,78 @@
-(function(root,A,B,F,M,N,O,S){
+(function(root,A,Ap,B,F,M,N,Np,O,Op,S,Sp){
 	var _fC=S.fromCharCode,
 		_tS=function(a){
-			return O.prototype.toString.call(a);
-		},
-		Ap=A.prototype,
-		Np=N.prototype,
-		Sp=S.prototype;
+			return Op.toString.call(a);
+		};
 	
-	// [0.1.0] Boolean Array.isArray ( Any value )
+	// [0.1] Boolean Array.isArray ( Any value )
 	A.isArray=A.isArray||function(a){
 		return "[object Array]"===_tS(a);
 	};
 	
-	// [0.1.0] Variable Array.prototype.at ( Number index )
-	// [x.x.x] Array    Array.prototype.at ( Number i1 , ... , Number iN )
-	Ap.at=function(a){
-		if(N.isInteger(a)&&this.length){
-			return 0<=a?this[a]:this[this.length+a];
-		}
-	};
-	
-	// [0.1.0] Boolean Array.prototype.toBool ( )
-	// [0.1.0] Boolean Array.prototype.toBoolean ( )
+	// [0.1] Boolean Array.prototype.toBool ( )
+	// [0.1] Boolean Array.prototype.toBoolean ( )
 	Ap.toBool=Ap.toBoolean=function(){
-		return true;
+		return 0<this.length;
 	};
 	
-	// [0.1.0] Boolean Boolean.and ( Boolean b1 , Boolean b2 )
+	// [0.1] Boolean Boolean.and ( Boolean b1 , Boolean b2 [ , ... Boolean bN ] )
 	B.and=function(a,b){
 		if(arguments.length<3){
 			return a&&b;
 		}
 		var A=arguments,
-			i=0,l=A.length,
+			i=0,
+			l=A.length,
 			r=a;
 		while(++i<l){
-			r=r&&A[i]
+			r=r&&A[i];
 		}
 		return r;
 	};
 	
-	// [0.1.0] Boolean Boolean.isBool ( Any value )
-	// [0.1.0] Boolean Boolean.isBoolean ( Any value )
+	// [0.1] Boolean Boolean.isBool ( Any value )
+	// [0.1] Boolean Boolean.isBoolean ( Any value )
 	// Borrowed from is.js 0.9.0.
 	B.isBool=B.isBoolean=function(a){
 		return true===a||false===a||"[object Boolean]"===_tS(a);
 	};
 	
-	// [0.1.0] Boolean Boolean.or ( Boolean b1 , Boolean b2 )
+	// [0.1] Boolean Boolean.or ( Boolean b1 , Boolean b2[ , ... , Boolean bN ] )
 	B.or=function(a,b){
 		if(arguments.length<3){
 			return a||b;
 		}
 		var A=arguments,
-			i=0,l=A.length,
+			i=0,
+			l=A.length,
 			r=a;
 		while(++i<l){
-			r=r||A[i]
+			r=r||A[i];
 		}
 		return r;
 	};
 	
-	// [0.1.0] Boolean Boolean.not ( Boolean b )
+	// [0.1] Boolean Boolean.not ( Boolean b )
 	B.not=function(a){
 		return !a;
 	};
 	
-	// [0.1.0] Boolean Boolean.xor ( Boolean b1 , Boolean b2 )
+	// [0.1.0] Boolean Boolean.xor ( Boolean b1 , Boolean b2 [ , ... , Boolean bN ] )
 	B.xor=function(a,b){
-		return (a||b)&&!(a&&b);
+		if(arguments.length<3){
+			return (a||b)&&!(a&&b);
+		}
+		var A=arguments,
+			i=0,
+			l=A.length,
+			r=a;
+		while(++i<l){
+			r=(r||A[i])&&!(r&&A[i]);
+		}
 	};
 	
-	// [0.1.0] Number Math.acosh ( Number n )
-	//		   Borrowed from MDN.
+	// [0.1] Number Math.acosh ( Number n )
+	// Borrowed from MDN.
 	M.acosh=M.acosh||function(a){
 		return (a+(a*a-1).sqrt()).log();
 	};
